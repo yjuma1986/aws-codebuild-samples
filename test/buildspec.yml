@@ -1,0 +1,15 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - pip install -r requirements.txt
+  build:
+    commands:
+      - echo "Running Unit Tests"
+      - pytest tests/test_unit.py
+      - echo "Running Integration Tests"
+      - pytest tests/test_integration.py
+      - echo "Running Load Test"
+      - locust -f tests/locustfile.py --headless -u 5 -r 1 -t 10s -H https://jsonplaceholder.typicode.com
